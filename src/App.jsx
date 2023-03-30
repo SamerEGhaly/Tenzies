@@ -1,5 +1,6 @@
 import React from 'react'
 import Dice from './Components/Dice'
+import { nanoid } from 'nanoid'
 
 function App() {
 
@@ -8,12 +9,17 @@ function App() {
   function initializeDices(){
     var newDices = []
     var randomNumber
+    
     for(var i = 0; i < 10; i++){
       randomNumber = Math.floor(Math.random() * 6 + 1)
+
       newDices.push({
+        id: nanoid(),
         value: randomNumber,
         isSelected: false
       })
+      
+      console.log(newDices[i].id)
     }
     setDices(newDices)
   }
@@ -22,7 +28,15 @@ function App() {
     initializeDices()
   },[])
 
-  const dicesArray = dices.map((dice,index) => <Dice key={index} value={dice.value} isSelected={dice.isSelected}/>)
+  const dicesArray = dices.map((dice,index) => {
+  return(
+  <Dice 
+    key={index}
+    id={dice.id}
+    value={dice.value}
+    isSelected={dice.isSelected}
+  />)
+})
 
   return (
     <div className="app">
