@@ -6,6 +6,7 @@ function App() {
 
   const [dices, setDices] = React.useState([])
   const [selectedCounter, setSelectedCounter] = React.useState(0)
+  const [finished, setFinished] = React.useState(false)
 
   function initializeDices(){
     var newDices = []
@@ -76,9 +77,31 @@ function App() {
     })
   }
 
+  function gameFinished(){
+    if(dices.length > 0 && selectedCounter == dices.length){
+      var firstValue = dices[0].value
+      var currentValue
+      for(var i = 1; i < dices.length; i++){
+        currentValue = dices[i].value
+        if(firstValue == currentValue){
+          continue
+        }
+        else{
+          return
+        }
+      }
+      setFinished(true)
+      console.log("You Win!!")
+    }
+  }
+
   React.useEffect(() => {
     initializeDices()
   },[])
+
+  React.useEffect(() => console.log(selectedCounter), [selectedCounter])
+
+  React.useEffect(() => gameFinished(), [dices])
 
   const dicesArray = dices.map((dice,index) => {
   return(
@@ -90,8 +113,6 @@ function App() {
     toggleSelect={toggleSelect}
   />)
   })
-  
-  React.useEffect(() => console.log(selectedCounter), [selectedCounter])
 
   return (
     <div className="app">
