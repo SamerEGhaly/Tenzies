@@ -24,6 +24,29 @@ function App() {
     setDices(newDices)
   }
 
+  function toggleSelect(id){
+    setDices(prevDices => {
+      var newDices = []
+      var currentDice
+
+      for(var i = 0; i < prevDices.length; i++){
+        currentDice = prevDices[i]
+
+        if(currentDice.id === id){
+          newDices.push({
+            ...currentDice,
+            isSelected: !currentDice.isSelected
+          })
+        }
+        else{
+          newDices.push(prevDices[i])
+        }
+      }
+
+      return newDices
+    })
+  }
+
   React.useEffect(() => {
     initializeDices()
   },[])
@@ -35,6 +58,7 @@ function App() {
     id={dice.id}
     value={dice.value}
     isSelected={dice.isSelected}
+    toggleSelect={toggleSelect}
   />)
 })
 

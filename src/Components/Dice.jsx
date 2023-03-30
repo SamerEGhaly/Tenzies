@@ -5,7 +5,7 @@ function Dice(props){
     }
 
     return(
-        <div style={diceStyle} className="dice">{props.value}</div>
+        <div onClick={()=>props.toggleSelect(props.id)} style={diceStyle} className="dice">{props.value}</div>
     )
 }
 
