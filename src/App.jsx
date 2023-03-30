@@ -47,6 +47,26 @@ function App() {
     })
   }
 
+  function rollAllDices(){
+    setDices(prevDices => {
+      var newDices = []
+      var randomNumber
+      var currentDice
+      
+      for(var i = 0; i < prevDices.length; i++){
+        currentDice = prevDices[i]
+        randomNumber = 
+        newDices.push({
+          ...currentDice,
+          value: Math.floor(Math.random() * 6 + 1) //random number in range [1,6]
+        }
+        )
+      }
+
+      return newDices
+    })
+  }
+
   React.useEffect(() => {
     initializeDices()
   },[])
@@ -70,7 +90,7 @@ function App() {
         <div className="dices">
           {dicesArray}
         </div>
-        <button className="roll--button">Roll</button>
+        <button onClick={rollAllDices} className="roll--button">Roll</button>
       </div>
     </div>
   )
