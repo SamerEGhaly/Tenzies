@@ -4,9 +4,10 @@ import { nanoid } from 'nanoid'
 
 function App() {
 
-  const [dices, setDices] = React.useState([])
-  const [selectedCounter, setSelectedCounter] = React.useState(0)
-  const [finished, setFinished] = React.useState(false)
+  const [dicesData, setDices] = React.useState([]) // an array of dices data
+  const [dicesArray, setDicesArray] = React.useState([]) // an array of the dice components to be rendered
+  const [selectedCounter, setSelectedCounter] = React.useState(0) // counter to show how many dices are selected
+  const [finished, setFinished] = React.useState(false) // boolean to show game state
 
   function initializeDices(){
     var newDices = []
@@ -78,11 +79,11 @@ function App() {
   }
 
   function gameFinished(){
-    if(dices.length > 0 && selectedCounter == dices.length){
-      var firstValue = dices[0].value
+    if(dicesData.length > 0 && selectedCounter == dicesData.length){
+      var firstValue = dicesData[0].value
       var currentValue
-      for(var i = 1; i < dices.length; i++){
-        currentValue = dices[i].value
+      for(var i = 1; i < dicesData.length; i++){
+        currentValue = dicesData[i].value
         if(firstValue == currentValue){
           continue
         }
@@ -101,18 +102,32 @@ function App() {
 
   React.useEffect(() => console.log(selectedCounter), [selectedCounter])
 
-  React.useEffect(() => gameFinished(), [dices])
+  React.useEffect(() => {
+    gameFinished()
+    setDicesArray(dicesData.map((dice,index) => {
+      return(
+      <Dice 
+        key={index}
+        id={dice.id}
+        value={dice.value}
+        isSelected={dice.isSelected}
+        toggleSelect={toggleSelect}
+      />)
+      }))
+  }, [dicesData])
 
-  const dicesArray = dices.map((dice,index) => {
-  return(
-  <Dice 
-    key={index}
-    id={dice.id}
-    value={dice.value}
-    isSelected={dice.isSelected}
-    toggleSelect={toggleSelect}
-  />)
-  })
+
+
+  // const dicesArray = dicesData.map((dice,index) => {
+  // return(
+  // <Dice 
+  //   key={index}
+  //   id={dice.id}
+  //   value={dice.value}
+  //   isSelected={dice.isSelected}
+  //   toggleSelect={toggleSelect}
+  // />)
+  // })
 
   return (
     <div className="app">
