@@ -5,21 +5,20 @@ import { nanoid } from 'nanoid'
 function App() {
 
   const [dices, setDices] = React.useState([])
+  const [selectedCounter, setSelectedCounter] = React.useState(0)
 
   function initializeDices(){
     var newDices = []
     var randomNumber
     
     for(var i = 0; i < 10; i++){
-      randomNumber = Math.floor(Math.random() * 6 + 1)
+      randomNumber = Math.floor(Math.random() * 6 + 1) //random number in range [1,6]
 
       newDices.push({
         id: nanoid(),
         value: randomNumber,
         isSelected: false
       })
-      
-      console.log(newDices[i].id)
     }
     setDices(newDices)
   }
@@ -37,6 +36,12 @@ function App() {
             ...currentDice,
             isSelected: !currentDice.isSelected
           })
+          if(currentDice.isSelected){ // if the clicked device was already selected and got unselected then decrease the counter
+            setSelectedCounter(selectedCounter - 1)
+          }
+          else{ // else increase the counter
+            setSelectedCounter(selectedCounter + 1)
+          }
         }
         else{
           newDices.push(prevDices[i])
@@ -84,7 +89,9 @@ function App() {
     isSelected={dice.isSelected}
     toggleSelect={toggleSelect}
   />)
-})
+  })
+  
+  React.useEffect(() => console.log(selectedCounter), [selectedCounter])
 
   return (
     <div className="app">
