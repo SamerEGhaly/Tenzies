@@ -1,6 +1,7 @@
 import React from 'react'
 import Dice from './Components/Dice'
 import { nanoid } from 'nanoid'
+import Confetti from "react-confetti"
 
 function App() {
 
@@ -123,6 +124,7 @@ function App() {
   return (
     <div className="app">
       <div className="main--container">
+        {finished && <Confetti recycle={false} numberOfPieces={600}/>}
         <h1 className="game--title">Tenzies</h1>
         <p className="game--description">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
         <div className="dices">
