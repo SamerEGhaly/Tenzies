@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid'
 
 function App() {
 
+  const noOfDice = 10
   const [dicesData, setDices] = React.useState([]) // an array of dices data
   const [dicesArray, setDicesArray] = React.useState([]) // an array of the dice components to be rendered
   const [selectedCounter, setSelectedCounter] = React.useState(0) // counter to show how many dices are selected
@@ -16,7 +17,7 @@ function App() {
     setFinished(false)
     setSelectedCounter(0)
 
-    for(var i = 0; i < 10; i++){
+    for(var i = 0; i < noOfDice; i++){
       randomNumber = Math.floor(Math.random() * 6 + 1) //random number in range [1,6]
 
       newDices.push({
