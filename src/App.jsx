@@ -9,10 +9,13 @@ function App() {
   const [selectedCounter, setSelectedCounter] = React.useState(0) // counter to show how many dices are selected
   const [finished, setFinished] = React.useState(false) // boolean to show game state
 
-  function initializeDices(){
+  function initializeGame(){
     var newDices = []
     var randomNumber
     
+    setFinished(false)
+    setSelectedCounter(0)
+
     for(var i = 0; i < 10; i++){
       randomNumber = Math.floor(Math.random() * 6 + 1) //random number in range [1,6]
 
@@ -59,7 +62,7 @@ function App() {
       var newDices = []
       var randomNumber
       var currentDice
-      
+
       for(var i = 0; i < prevDices.length; i++){
         currentDice = prevDices[i]
         if(currentDice.isSelected){
@@ -67,10 +70,10 @@ function App() {
         }
         else{
           randomNumber = Math.floor(Math.random() * 6 + 1) //random number in range [1,6]
-        newDices.push({
-          ...currentDice,
-          value: randomNumber
-        })
+          newDices.push({
+            ...currentDice,
+            value: randomNumber,
+          })
         }
       }
 
@@ -97,7 +100,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    initializeDices()
+    initializeGame()
   },[])
 
   React.useEffect(() => console.log(selectedCounter), [selectedCounter])
@@ -116,19 +119,6 @@ function App() {
       }))
   }, [dicesData])
 
-
-
-  // const dicesArray = dicesData.map((dice,index) => {
-  // return(
-  // <Dice 
-  //   key={index}
-  //   id={dice.id}
-  //   value={dice.value}
-  //   isSelected={dice.isSelected}
-  //   toggleSelect={toggleSelect}
-  // />)
-  // })
-
   return (
     <div className="app">
       <div className="main--container">
@@ -137,7 +127,7 @@ function App() {
         <div className="dices">
           {dicesArray}
         </div>
-        <button onClick={rollDices} className="roll--button">Roll</button>
+        <button onClick={() => {finished ? initializeGame() : rollDices()}} className="roll--button">{finished ? "Reset Game" : "Roll"}</button>
       </div>
     </div>
   )
