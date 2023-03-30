@@ -6,29 +6,31 @@ import Confetti from "react-confetti"
 function App() {
 
   const noOfDice = 10
-  const [dicesData, setDices] = React.useState([]) // an array of dices data
+  const [dicesData, setDices] = React.useState(newDice()) // an array of dices data
   const [selectedCounter, setSelectedCounter] = React.useState(0) // counter to show how many dices are selected
   const [finished, setFinished] = React.useState(false) // boolean to show game state 
 
-  function initializeGame(){
-    var newDices = []
-    var randomNumber
-    
-    console.log("initialize")
+  function newDie(){
+    var randomNumber = Math.floor(Math.random() * 6 + 1)
+    return({
+      id: nanoid(),
+      value: randomNumber,
+      isSelected: false
+    })
+  }
 
+  function newDice(){
+    var newDices = []
+    for(var i = 0; i < noOfDice; i++){
+      newDices.push(newDie())
+    }
+    return(newDices)
+  }
+
+  function resetGame(){
+    setDices(newDice())
     setFinished(false)
     setSelectedCounter(0)
-
-    for(var i = 0; i < noOfDice; i++){
-      randomNumber = Math.floor(Math.random() * 6 + 1) //random number in range [1,6]
-
-      newDices.push({
-        id: nanoid(),
-        value: randomNumber,
-        isSelected: false
-      })
-    }
-    setDices(newDices)
   }
 
   function toggleSelect(id){
@@ -65,7 +67,6 @@ function App() {
   function rollDices(){
     setDices(prevDices => {
       var newDices = []
-      var randomNumber
       var currentDice
 
       for(var i = 0; i < prevDices.length; i++){
@@ -74,11 +75,7 @@ function App() {
           newDices.push({...currentDice})
         }
         else{
-          randomNumber = Math.floor(Math.random() * 6 + 1) //random number in range [1,6]
-          newDices.push({
-            ...currentDice,
-            value: randomNumber,
-          })
+          newDices.push(newDie())
         }
       }
 
@@ -104,11 +101,9 @@ function App() {
     }
   }
 
-  React.useEffect(() => { gameFinished() }, [dicesData])
+  React.useEffect(() => { gameFinished() }, [dicesData, selectedCounter])
 
   React.useEffect(() => console.log(selectedCounter), [selectedCounter])
-
-  React.useEffect(() => { initializeGame() },[]) // initialize game parameters lastly to avoid bugs with reset button
 
   const dicesArray = dicesData.map((dice,index) => {
     return(
@@ -132,7 +127,7 @@ function App() {
         <div className="dices">
           {dicesArray}
         </div>
-        <button onClick={() => {finished ? initializeGame() : rollDices()}} className="roll--button">{finished ? "Reset Game" : "Roll"}</button>
+        <button onClick={() => {finished ? resetGame() : rollDices()}} className="roll--button">{finished ? "Reset Game" : "Roll"}</button>
       </div>
     </div>
   )
