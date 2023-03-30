@@ -7,14 +7,15 @@ function App() {
 
   const noOfDice = 10
   const [dicesData, setDices] = React.useState([]) // an array of dices data
-  //const [dicesArray, setDicesArray] = React.useState([]) // an array of the dice components to be rendered
   const [selectedCounter, setSelectedCounter] = React.useState(0) // counter to show how many dices are selected
-  const [finished, setFinished] = React.useState(false) // boolean to show game state
+  const [finished, setFinished] = React.useState(false) // boolean to show game state 
 
   function initializeGame(){
     var newDices = []
     var randomNumber
     
+    console.log("initialize")
+
     setFinished(false)
     setSelectedCounter(0)
 
@@ -103,26 +104,11 @@ function App() {
     }
   }
 
-  React.useEffect(() => {
-    initializeGame()
-  },[])
+  React.useEffect(() => { gameFinished() }, [dicesData])
 
   React.useEffect(() => console.log(selectedCounter), [selectedCounter])
 
-  React.useEffect(() => {
-    gameFinished()
-    // setDicesArray(dicesData.map((dice,index) => {
-    //   return(
-    //   <Dice 
-    //     key={index}
-    //     id={dice.id}
-    //     value={dice.value}
-    //     isSelected={dice.isSelected}
-    //     toggleSelect={toggleSelect}
-    //   />)
-    //   }))
-  }, [dicesData])
-
+  React.useEffect(() => { initializeGame() },[]) // initialize game parameters lastly to avoid bugs with reset button
 
   const dicesArray = dicesData.map((dice,index) => {
     return(
