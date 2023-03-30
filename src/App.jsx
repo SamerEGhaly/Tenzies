@@ -47,7 +47,7 @@ function App() {
     })
   }
 
-  function rollAllDices(){
+  function rollDices(){
     setDices(prevDices => {
       var newDices = []
       var randomNumber
@@ -55,12 +55,16 @@ function App() {
       
       for(var i = 0; i < prevDices.length; i++){
         currentDice = prevDices[i]
-        randomNumber = 
+        if(currentDice.isSelected){
+          newDices.push({...currentDice})
+        }
+        else{
+          randomNumber = Math.floor(Math.random() * 6 + 1) //random number in range [1,6]
         newDices.push({
           ...currentDice,
-          value: Math.floor(Math.random() * 6 + 1) //random number in range [1,6]
+          value: randomNumber
+        })
         }
-        )
       }
 
       return newDices
@@ -90,7 +94,7 @@ function App() {
         <div className="dices">
           {dicesArray}
         </div>
-        <button onClick={rollAllDices} className="roll--button">Roll</button>
+        <button onClick={rollDices} className="roll--button">Roll</button>
       </div>
     </div>
   )
