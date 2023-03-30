@@ -3,3 +3,72 @@
   margin: 0;
   padding: 0;
 }
+
+.app {
+  width: 40%;
+  aspect-ratio: 1/1;
+  background-color: #0B2434;
+  margin: 10% auto;
+  padding: 3rem 2rem;
+}
+
+.main--container{
+  background-color: #F5F5F5;
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 10px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.game--title{
+  font-family: Karla, sans-serif;
+  font-weight: 700;
+  color: #2B283A;
+  margin: 3rem 0 0;
+  font-size: 2.5rem;
+}
+
+.game--description{
+  font-family: Inter, sans-serif;
+  color:#4A4E74;
+  margin: 0 5rem;
+  font-size: 1.2rem;
+}
+
+.dices{
+  margin: 4rem 4rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.dice{
+  display: flex;
+  width: 3rem;
+  aspect-ratio: 1/1;
+  justify-content: center;
+  align-items: center;
+  font-family: Karla, sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: #2B283A;
+  border-radius: 3px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+}
+
+.roll--button{
+  width: 9rem;
+  height: 3.5rem;
+  margin-top: 3rem;
+  border-radius: 4px;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.18);
+  border: none;
+  background-color: #5035FF;
+  font-family: Karla, sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: white;
+}
